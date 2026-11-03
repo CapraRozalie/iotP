@@ -1,8 +1,14 @@
 import json
 import os
 import requests
+from dotenv import load_dotenv
 
-API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjY4MSwiaWF0IjoxNzkzNzM3NjIzLCJleHAiOjExNzkzNzM3NjIzLCJpc3MiOiJnb2xlbWlvIiwianRpIjoiNmYxOGE1OTctNmZhZi00NjkyLTg1NWEtOTBhZmQwZWRkMjY4In0.EzwGty0TlSjWa_qlVFr_NHpIcWIuenXT6XoS_hBibG4"
+load_dotenv()
+
+API_KEY = os.getenv("GOLEMIO_API_KEY")
+
+if not API_KEY:
+    raise ValueError("GOLEMIO_API_KEY not found in .env")
 
 url = "https://api.golemio.cz/v2/sortedwastestations"
 
@@ -36,11 +42,9 @@ data = response.json()
 with open("../../waste_stations.json", "w", encoding="utf-8") as f:
     json.dump(data, f, indent=4, ensure_ascii=False)
 
-# Display number of stations
 features = data.get("features", [])
 
 print("Number of stations:", len(features))
 
-# Display station properties
 for feature in features:
     print(feature.get("properties", {}))
