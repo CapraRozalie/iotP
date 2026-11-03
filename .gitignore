@@ -6,6 +6,6 @@ dist/
 wheels/
 *.egg-info
 .idea
-
+waste_stations.json
 # Virtual environments
 .venv
